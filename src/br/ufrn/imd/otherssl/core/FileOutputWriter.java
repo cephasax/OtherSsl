@@ -61,7 +61,7 @@ public class FileOutputWriter {
 	
 	public void saveAndClose() throws IOException {
 		this.fos.close();
-	    System.out.println("Arquivo: " + fileName + " salvo!" );
+	    System.out.println("Arquivo: " + fileName + " salvo!\n" );
 	}
 	
 	public void clearWriterContent() {
