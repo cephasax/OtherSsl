@@ -33,7 +33,7 @@ public class CollectiveClassifierExecutor {
 		folds = new ArrayList<Dataset>();
 		seed = 19;
 
-		populateDatasetsTest();
+		populateDatasets();
 		for (String s : versions) {
 			for (Dataset d : datasets) {
 				run(d, s);

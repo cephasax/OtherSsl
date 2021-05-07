@@ -1,35 +1,39 @@
-package br.ufrn.imd.otherssl.workers;
+package br.ufrn.imd.otherssl.draft;
 
 import java.io.File;
 import java.util.Random;
 
+import br.ufrn.imd.otherssl.core.Dataset;
 import weka.classifiers.CollectiveEvaluation;
-import weka.classifiers.collective.meta.YATSI;
+import weka.classifiers.collective.functions.LLGC;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
-public class Teste3 {
+public class Teste {
 
 	public static void main(String[] args) throws Exception {
 
-		String base = new String("src/main/Iris.arff");
+		String base = new String("src/main/resources/datasets/test/Iris.arff");
 
 		File f = new File(base);
 
 		// load data, set class attribute to last
 		Instances data = DataSource.read(f.getAbsolutePath());;		
 		data.setClassIndex(data.numAttributes() - 1);
-
+		
+		Dataset d = new Dataset(data);
+		
 		// configure classifier
-		YATSI yatsi = new YATSI();
-		yatsi.setKNN(10);
-		yatsi.setNoWeights(true);
-
+		LLGC llgc = new LLGC();
+		llgc.setSeed(10);
+		
 		// cross-validate classifier
 		CollectiveEvaluation eval = new CollectiveEvaluation(data);
-		eval.crossValidateModel(yatsi, data, 10, new Random(1));
+		eval.crossValidateModel(llgc, d.getInstances(), 10, new Random(17));
 
 		// output evaluation results
+		System.out.println(eval.toClassDetailsString());
 		System.out.println(eval.toSummaryString());
+		System.out.println(eval.toMatrixString());
 	}
 }
